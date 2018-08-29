@@ -9,7 +9,7 @@ namespace FeatureGame.Domain.Tests
         [Test]
         public void ShouldReturnSequenceIdNumbers_WhenGenerateNewCards()
         {
-            var player = new Player();
+            var player = new Player(new Board(0));
             var backlog = new BacklogColumn();
 
             var card1 = backlog.GenerateNewCardForPlayer(player);
