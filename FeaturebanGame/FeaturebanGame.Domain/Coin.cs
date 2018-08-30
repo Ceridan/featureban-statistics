@@ -4,11 +4,11 @@ namespace FeaturebanGame.Domain
 {
     public struct Coin
     {
-        private static readonly Random _random = new Random();
+        private static readonly Random Random = new Random();
 
-        public CoinDropResult Drop()
+        public static CoinDropResult Drop()
         {
-            return (CoinDropResult)_random.Next(0, 1);
+            return (CoinDropResult)Random.Next(0, 1);
         }
     }
 }
