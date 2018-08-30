@@ -10,6 +10,7 @@ namespace FeaturebanGame.Domain
         private readonly DoneColumn _done = new DoneColumn();
 
         public IReadOnlyList<WipColumn> Wips => _wips.AsReadOnly();
+        public DoneColumn DoneColumn => _done;
 
         public Board(int limit)
         {

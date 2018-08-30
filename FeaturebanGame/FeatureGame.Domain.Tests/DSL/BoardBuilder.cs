@@ -6,15 +6,20 @@ namespace FeatureGame.Domain.Tests.DSL
 {
     public class BoardBuilder
     {
-        private List<Card> _cards = new List<Card>();
+        private List<Card> _cardsFirst = new List<Card>();
+        private List<Card> _cardsSecond = new List<Card>();
         private int _limit = 0;
 
         public Board Please()
         {
             var board = new Board(_limit);
-            foreach (var card in _cards)
+            foreach (var card in _cardsFirst)
             {
                 board.Wips.First().AddCard(card);
+            }
+            foreach (var card in _cardsSecond)
+            {
+                board.Wips.Last().AddCard(card);
             }
             
             return board;
@@ -26,7 +31,7 @@ namespace FeatureGame.Domain.Tests.DSL
             {
                 State = CardState.Blocked
             };
-            _cards.Add(blockedCard);
+            _cardsFirst.Add(blockedCard);
 
             return this;
         }
@@ -37,7 +42,18 @@ namespace FeatureGame.Domain.Tests.DSL
             {
                 State = CardState.Available
             };
-            _cards.Add(blockedCard);
+            _cardsFirst.Add(blockedCard);
+
+            return this;
+        }
+
+        public BoardBuilder WithAvailableCardOnSecondWipColumn()
+        {
+            var blockedCard = new Card
+            {
+                State = CardState.Available
+            };
+            _cardsSecond.Add(blockedCard);
 
             return this;
         }
