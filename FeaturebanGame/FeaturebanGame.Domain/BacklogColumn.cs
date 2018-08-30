@@ -1,8 +1,8 @@
 namespace FeaturebanGame.Domain
 {
-    public struct BacklogColumn
+    public class BacklogColumn
     {
-        private static int _lastCardId = 1;
+        private int _lastCardId = 1;
 
         public Card GenerateNewCardForPlayer(Player player)
         {

@@ -10,5 +10,21 @@ namespace FeaturebanGame.Domain
         public int Limit { get; set; }
 
         public IReadOnlyList<Card> Cards => _cards.AsReadOnly();
+
+        public bool AddCard(Card card)
+        {
+            if (_cards.Count < Limit || Limit == 0)
+            {
+                _cards.Add(card);
+                return true;
+            }
+
+            return false;
+        }
+
+        public void RemoveCard(Card card)
+        {
+            _cards.Remove(card);
+        }
     }
 }

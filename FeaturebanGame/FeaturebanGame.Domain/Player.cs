@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using System.Linq;
+
 namespace FeaturebanGame.Domain
 {
     public class Player
@@ -25,7 +28,7 @@ namespace FeaturebanGame.Domain
                 return;
             }
             
-            var card = cards.FirstOrDeafult(x => x.State == CardState.Available);
+            var card = cards.FirstOrDefault(x => x.State == CardState.Available);
             if (card != null)
             {
                 _board.BlockCard(card);
@@ -40,7 +43,7 @@ namespace FeaturebanGame.Domain
             return false;
         }
 
-        private bool WorkWithCards(object cards)
+        private bool WorkWithCards(List<Card> cards)
         {
             var availableCards = cards.Where(x => x.State == CardState.Available);
             foreach (var card in availableCards)
@@ -49,7 +52,7 @@ namespace FeaturebanGame.Domain
                 if (result) return true;
             }
 
-            var blockedCard = cards.FirstOrDeafult(x => x.State == CardState.Blocked);
+            var blockedCard = cards.FirstOrDefault(x => x.State == CardState.Blocked);
             if (blockedCard != null)
             {
                 _board.UnblockCard(blockedCard);

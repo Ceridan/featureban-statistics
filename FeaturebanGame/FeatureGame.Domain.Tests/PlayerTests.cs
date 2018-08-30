@@ -1,4 +1,6 @@
-﻿using FeaturebanGame.Domain;
+﻿using System.Linq;
+using FeaturebanGame.Domain;
+using FeatureGame.Domain.Tests.DSL;
 using NUnit.Framework;
 
 namespace FeatureGame.Domain.Tests
@@ -9,8 +11,8 @@ namespace FeatureGame.Domain.Tests
         [Test]
         public void ShouldCreateCardForPlayer_WhenPlayerDoWorkWithCoinHeadAndEmptyBoard()
         {
-            var board = Create.Board.WithZeroCards().Please();
-            var player = Create.Player.WithBoard(board);
+            var board = Create.Board.Please();
+            var player = Create.Player.WithBoard(board).Please();
 
             player.DoWork(CoinDropResult.Head);
 
@@ -21,8 +23,8 @@ namespace FeatureGame.Domain.Tests
         [Test]
         public void ShouldCreateCardForPlayer_WhenPlayerDoWorkWithCoinTailAndEmptyBoard()
         {
-            var board = Create.Board.WithZeroCards().Please();
-            var player = Create.Player.WithBoard(board);
+            var board = Create.Board.Please();
+            var player = Create.Player.WithBoard(board).Please();
 
             player.DoWork(CoinDropResult.Tail);
 
