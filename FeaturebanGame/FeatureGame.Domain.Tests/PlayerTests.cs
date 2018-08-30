@@ -55,5 +55,18 @@ namespace FeatureGame.Domain.Tests
             var playerCard = board.GetOrderedPlayerCards(player).Single();
             Assert.AreEqual(CardState.Available, playerCard.State);
         }
+        
+        [Test]
+        public void ShouldBlockCardAndCreateNewCardForPlayer_WhenPlayerDoWorkWithCoinHeadAndBoardWithUnblockedCard()
+        {
+            var board = Create.Board.WithAvailableCard().Please();
+            var player = Create.Player.WithBoard(board).AssignAllCardsOnBoardToPlayer().Please();
+
+            player.DoWork(CoinDropResult.Head);
+
+            var playerCards = board.GetOrderedPlayerCards(player);
+            Assert.AreEqual(2, playerCards.Count);
+            Assert.AreEqual(CardState.Blocked, playerCards.First().State);
+        }
     }
 }

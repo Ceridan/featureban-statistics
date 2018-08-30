@@ -30,5 +30,16 @@ namespace FeatureGame.Domain.Tests.DSL
 
             return this;
         }
+
+        public BoardBuilder WithAvailableCard()
+        {
+            var blockedCard = new Card
+            {
+                State = CardState.Available
+            };
+            _cards.Add(blockedCard);
+
+            return this;
+        }
     }
 }
