@@ -11,7 +11,7 @@ namespace FeaturebanGame.Domain
         {
             foreach (var player in _players)
             {
-                player.Work(Coin.Drop());
+                player.DoWork(Coin.Drop());
             }
             
             // TODO: Game turn logic

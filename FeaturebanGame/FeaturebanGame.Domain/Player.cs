@@ -12,7 +12,7 @@ namespace FeaturebanGame.Domain
             _board = board;
         }
 
-        public void Work(CoinDropResult drop)
+        public void DoWork(CoinDropResult drop)
         {
             var cards = _board.GetOrderedPlayerCards(this);
             if (drop == CoinDropResult.Tail)
@@ -35,7 +35,7 @@ namespace FeaturebanGame.Domain
 
         private bool TakeNewCard()
         {
-            bool result = _board.GetNewCard(this);
+            bool result = _board.GetNewCardFor(this);
             if (result) return true;
             return false;
         }
