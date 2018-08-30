@@ -68,5 +68,17 @@ namespace FeatureGame.Domain.Tests
             Assert.AreEqual(2, playerCards.Count);
             Assert.AreEqual(CardState.Blocked, playerCards.First().State);
         }
+        
+        [Test]
+        public void ShouldMoveCard_WhenPlayerDoWorkWithCoinTailAndBoardWithUnblockedCardOnFirstColumn()
+        {
+            var board = Create.Board.WithAvailableCard().Please();
+            var player = Create.Player.WithBoard(board).AssignAllCardsOnBoardToPlayer().Please();
+
+            player.DoWork(CoinDropResult.Tail);
+
+            Assert.AreEqual(false, board.Wips.First().Cards.Any());
+            Assert.AreEqual(true, board.Wips.Last().Cards.Any());
+        }
     }
 }
