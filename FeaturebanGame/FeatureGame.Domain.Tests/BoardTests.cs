@@ -149,5 +149,19 @@ namespace FeatureGame.Domain.Tests
 		    Assert.AreEqual(0, board.Wips.First().Cards.Count);
 		    Assert.AreEqual(1, board.Wips.Last().Cards.Count);
 	    }
+
+	    [Test]
+	    public void WhenMoveAvailableCardFromSecondWipColumn_ShouldMovedToDoneColumn()
+	    {
+		    var card = new Card {State = CardState.Available};
+		    var board = Create.Board
+			    .WithCardOnSecondWipColumn(card)
+			    .Please();
+
+		    board.MoveCard(card);
+
+		    Assert.AreEqual(0, board.Wips.Last().Cards.Count);
+		    Assert.AreEqual(1, board.DoneColumn.CardCount);
+	    }
     }
 }
