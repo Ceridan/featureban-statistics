@@ -163,5 +163,21 @@ namespace FeatureGame.Domain.Tests
 		    Assert.AreEqual(0, board.Wips.Last().Cards.Count);
 		    Assert.AreEqual(1, board.DoneColumn.CardCount);
 	    }
+
+	    [Test]
+	    public void WhenMoveAvailableCardFromFirstWipColumn_ShouldNotMoveIfSecondWipColumnReachedLimit()
+	    {
+		    var card = new Card {State = CardState.Available};
+		    var board = Create.Board
+				.WithWipLimit(1)
+			    .WithCardOnFirstWipColumn(card)
+			    .WithCardOnSecondWipColumn(new Card())
+			    .Please();
+
+		    board.MoveCard(card);
+
+		    Assert.AreEqual(1, board.Wips.First().Cards.Count);
+		    Assert.AreEqual(1, board.Wips.Last().Cards.Count);
+	    }
     }
 }

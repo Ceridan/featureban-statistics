@@ -74,10 +74,9 @@ namespace FeaturebanGame.Domain
                         return true;
                     }
 
-                    if (_wips[i + 1].Limit == 0 || _wips[i + 1].Limit > _wips[i + 1].Cards.Count)
+                    if (_wips[i + 1].AddCard(card))
                     {
                         _wips[i].RemoveCard(card);
-                        _wips[i + 1].AddCard(card);
                         return true;
                     }
 
