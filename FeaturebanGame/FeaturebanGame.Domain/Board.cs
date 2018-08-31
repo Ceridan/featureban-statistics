@@ -16,8 +16,8 @@ namespace FeaturebanGame.Domain
         {
             _wips.AddRange(new []
             {
-                new WipColumn { Number = 1, Limit = limit },
-                new WipColumn { Number = 2, Limit = limit },
+                new WipColumn(limit) { Number = 1 },
+                new WipColumn(limit) { Number = 2 },
             });
         }
 

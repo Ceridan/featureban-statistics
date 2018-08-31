@@ -6,8 +6,13 @@ namespace FeaturebanGame.Domain
     {
         private readonly List<Card> _cards = new List<Card>();
 
+        public WipColumn(int limit)
+        {
+            Limit = limit;
+        }
+
         public int Number { get; set; }
-        public int Limit { get; set; }
+        public int Limit { get; }
 
         public IReadOnlyList<Card> Cards => _cards.AsReadOnly();
 
