@@ -38,7 +38,7 @@ namespace FeaturebanGame.Domain
 
         private bool TakeNewCard()
         {
-            bool result = _board.GetNewCardFor(this);
+            bool result = _board.AddNewCardFor(this);
             if (result) return true;
             return false;
         }

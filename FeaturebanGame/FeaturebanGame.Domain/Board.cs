@@ -53,7 +53,7 @@ namespace FeaturebanGame.Domain
             card.State = CardState.Available;
         }
 
-        public bool GetNewCardFor(Player player)
+        public bool AddNewCardFor(Player player)
         {
             var card = _backlog.GenerateNewCardForPlayer(player);
             return _wips.First().AddCard(card);
