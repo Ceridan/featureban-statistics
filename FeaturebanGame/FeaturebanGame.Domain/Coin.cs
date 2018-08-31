@@ -2,11 +2,16 @@
 
 namespace FeaturebanGame.Domain
 {
-    public struct Coin
+    public interface ICoin
+    {
+        CoinDropResult Drop();
+    }
+
+    public struct Coin : ICoin
     {
         private static readonly Random Random = new Random();
 
-        public static CoinDropResult Drop()
+        public CoinDropResult Drop()
         {
             return (CoinDropResult)Random.Next(0, 1);
         }
