@@ -71,5 +71,16 @@ namespace FeatureGame.Domain.Tests
 
 		    Assert.AreEqual(CardState.Blocked, card.State);
 	    }
+
+	    [Test]
+	    public void WhenUnblockCard_ShouldMakeCardAvailable()
+	    {
+		    var board = Create.Board.Please();
+		    var card = new Card {State = CardState.Blocked};
+
+		    board.UnblockCard(card);
+
+		    Assert.AreEqual(CardState.Available, card.State);
+	    }
     }
 }
