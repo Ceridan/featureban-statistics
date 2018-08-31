@@ -46,5 +46,19 @@ namespace FeatureGame.Domain.Tests
 		    Assert.AreEqual(2, cards.First().Id);
 		    Assert.AreEqual(1, cards.Last().Id);
 	    }
+
+	    [Test]
+	    public void GetOrderedCards_ShouldReturnOrderedCards()
+	    {
+		    var board = Create.Board
+			    .WithCardOnFirstWipColumn(new Card { Id = 1 })
+			    .WithCardOnSecondWipColumn(new Card { Id = 2 })
+			    .Please();
+
+		    var cards = board.GetOrderedCards();
+
+		    Assert.AreEqual(2, cards.First().Id);
+		    Assert.AreEqual(1, cards.Last().Id);
+	    }
     }
 }
