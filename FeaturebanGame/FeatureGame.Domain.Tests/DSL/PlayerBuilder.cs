@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using FeaturebanGame.Domain;
 
 namespace FeatureGame.Domain.Tests.DSL
@@ -28,6 +29,22 @@ namespace FeatureGame.Domain.Tests.DSL
         public PlayerBuilder AssignAllCardsOnBoardToPlayer()
         {
             _cards = _board.GetOrderedCards();
+            return this;
+        }
+
+        public PlayerBuilder AssignAllAvailableCardsOnBoardToPlayer()
+        {
+            _cards = _board.GetOrderedCards()
+                .Where(x => x.State == CardState.Available)
+                .ToList();
+            return this;
+        }
+
+        public PlayerBuilder AssignAllBlockedCardsOnBoardToPlayer()
+        {
+            _cards = _board.GetOrderedCards()
+                .Where(x => x.State == CardState.Blocked)
+                .ToList();
             return this;
         }
     }
