@@ -113,5 +113,26 @@ namespace FeatureGame.Domain.Tests
             Assert.AreEqual(false, board.Wips.First().Cards.Any());
             Assert.AreEqual(true, board.Wips.Last().Cards.Any());
         }
+
+        [Test]
+        public void ShouldUnblockCardOfAnotherPlayer_WhenPlayerCantDoWorkWithOwnCardsAndBoardHasBlockedCards()
+        {
+            var board = Create.Board
+                .WithWipLimit(1)
+                .WithBlockedCard()
+                .Please();
+            var passivePlayer = Create.Player
+                .WithBoard(board)
+                .AssignAllCardsOnBoardToPlayer()
+                .Please();
+            var activePlayer = Create.Player
+                .WithBoard(board)
+                .Please();
+
+            activePlayer.DoWork(CoinDropResult.Tail);
+
+            var passivePlayerCard = board.GetOrderedPlayerCards(passivePlayer).Single();
+            Assert.AreEqual(CardState.Available, passivePlayerCard.State);
+        }
     }
 }
