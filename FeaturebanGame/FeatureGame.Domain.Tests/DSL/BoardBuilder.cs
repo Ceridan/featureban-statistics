@@ -58,6 +58,18 @@ namespace FeatureGame.Domain.Tests.DSL
             return this;
         }
 
+        public BoardBuilder WithCardOnFirstWipColumn(Card card)
+        {
+            _cardsFirst.Add(card);
+            return this;
+        }
+
+        public BoardBuilder WithCardOnSecondWipColumn(Card card)
+        {
+            _cardsSecond.Add(card);
+            return this;
+        }
+
         public BoardBuilder WithWipLimit(int limit)
         {
             _limit = limit;

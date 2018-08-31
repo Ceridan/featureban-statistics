@@ -1,4 +1,5 @@
 using System.Linq;
+using FeaturebanGame.Domain;
 using FeatureGame.Domain.Tests.DSL;
 using NUnit.Framework;
 
@@ -28,5 +29,22 @@ namespace FeatureGame.Domain.Tests
 	        Assert.AreEqual(player1, player1Cards.Single().Player);
         }
 
+	    [Test]
+	    public void GetOrderedPlayerCards_ShouldReturnOrderedCardsForPlayer()
+	    {
+		    var board = Create.Board
+			    .WithCardOnFirstWipColumn(new Card { Id = 1 })
+			    .WithCardOnSecondWipColumn(new Card { Id = 2 })
+			    .Please();
+		    var player = Create.Player
+			    .WithBoard(board)
+			    .AssignAllCardsOnBoardToPlayer()
+			    .Please();
+
+		    var cards = board.GetOrderedPlayerCards(player);
+
+		    Assert.AreEqual(2, cards.First().Id);
+		    Assert.AreEqual(1, cards.Last().Id);
+	    }
     }
 }
