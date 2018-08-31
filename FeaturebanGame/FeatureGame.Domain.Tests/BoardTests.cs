@@ -94,5 +94,17 @@ namespace FeatureGame.Domain.Tests
 		    var card = board.Wips.First().Cards.Single();
 		    Assert.AreEqual(CardState.Available, card.State);
 	    }
+
+	    [Test]
+	    public void WhenAddNewCard_ShouldGenerateNewCardForSelectedPlayer()
+	    {
+		    var board = Create.Board.Please();
+		    var player = Create.Player.WithBoard(board).Please();
+
+		    board.AddNewCardFor(player);
+
+		    var card = board.Wips.First().Cards.Single();
+		    Assert.AreEqual(player, card.Player);
+	    }
     }
 }
