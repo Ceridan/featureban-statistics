@@ -2,7 +2,7 @@ namespace FeaturebanGame.Domain
 {
     public enum CoinDropResult
     {
-        Head,
-        Tail
+        Head = 0,
+        Tail = 1
     }
 }

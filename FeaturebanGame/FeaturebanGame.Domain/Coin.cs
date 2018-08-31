@@ -13,7 +13,7 @@ namespace FeaturebanGame.Domain
 
         public CoinDropResult Drop()
         {
-            return (CoinDropResult)Random.Next(0, 1);
+            return (CoinDropResult)Random.Next(0, 2);
         }
     }
 }
