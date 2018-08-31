@@ -106,5 +106,21 @@ namespace FeatureGame.Domain.Tests
 		    var card = board.Wips.First().Cards.Single();
 		    Assert.AreEqual(player, card.Player);
 	    }
+
+	    [Test]
+	    public void WhenAddNewCard_ShouldNotGenerateNewCardIfWipLimitIsReached()
+	    {
+		    var board = Create.Board
+			    .WithWipLimit(1)
+			    .WithCardOnFirstWipColumn(new Card())
+			    .Please();
+		    var player = Create.Player
+			    .WithBoard(board)
+			    .Please();
+
+		    board.AddNewCardFor(player);
+
+		    Assert.AreEqual(1, board.Wips.First().Cards.Count);
+	    }
     }
 }
