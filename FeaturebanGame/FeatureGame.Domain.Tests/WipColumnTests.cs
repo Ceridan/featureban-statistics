@@ -15,5 +15,18 @@ namespace FeatureGame.Domain.Tests.DSL
 
             Assert.AreEqual(1, wip.Cards.Count);
         }
+
+        [Test]
+        public void ShouldNotPutCardIntoCardCollection_WhenAddCardAndWipColumnReachedTheLimit()
+        {
+            var wip = Create.WipColumn
+                .WithLimit(1)
+                .WithCard()
+                .Please();
+
+            wip.AddCard(new Card());
+
+            Assert.AreEqual(1, wip.Cards.Count);
+        }
     }
 }
