@@ -57,5 +57,11 @@ namespace FeatureGame.Domain.Tests.DSL
 
             return this;
         }
+
+        public BoardBuilder WithWipLimit(int limit)
+        {
+            _limit = limit;
+            return this;
+        }
     }
 }

@@ -92,5 +92,26 @@ namespace FeatureGame.Domain.Tests
             Assert.AreEqual(false, board.Wips.Last().Cards.Any());
             Assert.AreEqual(1, board.DoneColumn.CardCount);
         }
+
+        [Test]
+        public void ShouldMoveCardOfAnotherPlayer_WhenPlayerCantDoWorkWithOwnCardsAndBoardHasOtherAvailableCards()
+        {
+            var board = Create.Board
+                .WithWipLimit(1)
+                .WithAvailableCard()
+                .Please();
+            var passivePlayer = Create.Player
+                .WithBoard(board)
+                .AssignAllCardsOnBoardToPlayer()
+                .Please();
+            var activePlayer = Create.Player
+                .WithBoard(board)
+                .Please();
+
+            activePlayer.DoWork(CoinDropResult.Tail);
+
+            Assert.AreEqual(false, board.Wips.First().Cards.Any());
+            Assert.AreEqual(true, board.Wips.Last().Cards.Any());
+        }
     }
 }
