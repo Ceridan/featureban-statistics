@@ -9,7 +9,7 @@ namespace FeatureGame.Domain.Tests
     public class BoardTests
     {
         [Test]
-        public void GetOrderedPlayerCards_ShouldReturnCardsForSelectedPlayer()
+        public void WhenGetOrderedPlayerCards_ShouldReturnCardsForSelectedPlayer()
         {
 	        var board = Create.Board
 		        .WithAvailableCard()
@@ -30,7 +30,7 @@ namespace FeatureGame.Domain.Tests
         }
 
 	    [Test]
-	    public void GetOrderedPlayerCards_ShouldReturnOrderedCardsForPlayer()
+	    public void WhenGetOrderedPlayerCards_ShouldReturnOrderedCardsForPlayer()
 	    {
 		    var board = Create.Board
 			    .WithCardOnFirstWipColumn(new Card { Id = 1 })
@@ -48,7 +48,7 @@ namespace FeatureGame.Domain.Tests
 	    }
 
 	    [Test]
-	    public void GetOrderedCards_ShouldReturnOrderedCards()
+	    public void WhenGetOrderedCards_ShouldReturnOrderedCards()
 	    {
 		    var board = Create.Board
 			    .WithCardOnFirstWipColumn(new Card { Id = 1 })
@@ -59,6 +59,17 @@ namespace FeatureGame.Domain.Tests
 
 		    Assert.AreEqual(2, cards.First().Id);
 		    Assert.AreEqual(1, cards.Last().Id);
+	    }
+
+	    [Test]
+	    public void WhenBlockCard_ShouldBlockCard()
+	    {
+		    var board = Create.Board.Please();
+		    var card = new Card {State = CardState.Available};
+
+		    board.BlockCard(card);
+
+		    Assert.AreEqual(CardState.Blocked, card.State);
 	    }
     }
 }
