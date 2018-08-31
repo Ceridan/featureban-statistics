@@ -122,5 +122,18 @@ namespace FeatureGame.Domain.Tests
 
 		    Assert.AreEqual(1, board.Wips.First().Cards.Count);
 	    }
+
+	    [Test]
+	    public void WhenMoveCard_ShouldNotMoveBlockedCard()
+	    {
+		    var card = new Card {State = CardState.Blocked};
+		    var board = Create.Board
+			    .WithCardOnFirstWipColumn(card)
+			    .Please();
+
+		    board.MoveCard(card);
+
+		    Assert.AreEqual(1, board.Wips.First().Cards.Count);
+	    }
     }
 }
