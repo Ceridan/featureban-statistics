@@ -28,5 +28,19 @@ namespace FeatureGame.Domain.Tests.DSL
 
             Assert.AreEqual(1, wip.Cards.Count);
         }
+
+        [Test]
+        public void ShouldRemoveCardFromCardsCollection_WhenRemoveCardAttachedToColumn()
+        {
+            var card = new Card();
+            var wip = Create.WipColumn
+                .WithLimit(1)
+                .WithCard(card)
+                .Please();
+
+            wip.RemoveCard(card);
+
+            Assert.AreEqual(0, wip.Cards.Count);
+        }
     }
 }

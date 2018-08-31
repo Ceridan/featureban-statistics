@@ -21,6 +21,12 @@ namespace FeatureGame.Domain.Tests.DSL
             return this;
         }
 
+        public WipColumnBuilder WithCard(Card card)
+        {
+            _cards.Add(card);
+            return this;
+        }
+
         public WipColumn Please()
         {
             var wip = new WipColumn(_limit);
