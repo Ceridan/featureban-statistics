@@ -4,7 +4,7 @@ Featureban Statistics - учебный проект по теме Domain Driven 
 Авторы: Никита Стариченко (@wownetort), Михаил Кумачев (@ceridan)
 
 ## Условия задания
-Исследовать игру FeatureBan ([правила игры](https://www.dropbox.com/s/01mbav05k4bogen/featureban-slides-2.2-rus.pdf)) на зависимость пропускной способности доски от ограничения WIP.
+Исследовать игру FeatureBan ([правила игры](featureban-slides-2.2-rus.pdf)) на зависимость пропускной способности доски от ограничения WIP.
 
 Входные параметры:
 * Количество игроков (3, 5, 10)
