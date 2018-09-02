@@ -101,10 +101,12 @@ namespace FeatureGame.Domain.Tests
                 .WithAvailableCard()
                 .Please();
             var passivePlayer = Create.Player
+                .WithId(1)
                 .WithBoard(board)
                 .AssignAllCardsOnBoardToPlayer()
                 .Please();
             var activePlayer = Create.Player
+                .WithId(2)
                 .WithBoard(board)
                 .Please();
 
@@ -122,10 +124,12 @@ namespace FeatureGame.Domain.Tests
                 .WithBlockedCard()
                 .Please();
             var passivePlayer = Create.Player
+                .WithId(1)
                 .WithBoard(board)
                 .AssignAllCardsOnBoardToPlayer()
                 .Please();
             var activePlayer = Create.Player
+                .WithId(2)
                 .WithBoard(board)
                 .Please();
 

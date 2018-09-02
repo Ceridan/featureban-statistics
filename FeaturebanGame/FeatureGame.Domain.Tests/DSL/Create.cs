@@ -24,6 +24,11 @@ namespace FeatureGame.Domain.Tests.DSL
             return this;
         }
 
+        public GameBuilder WithLimit(int limit)
+        {
+            _limit = limit;
+            return this;
+        }
 
         public GameBuilder WithTurns(int turnCount)
         {

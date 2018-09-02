@@ -1,4 +1,5 @@
 using FeaturebanGame.Domain;
+using FeatureGame.Domain.Tests.DSL;
 using NUnit.Framework;
 
 namespace FeatureGame.Domain.Tests
@@ -9,7 +10,7 @@ namespace FeatureGame.Domain.Tests
         [Test]
         public void ShouldReturnSequenceIdNumbers_WhenGenerateNewCards()
         {
-            var player = new Player(new Board(0));
+            var player = Create.Player.Please();
             var backlog = new BacklogColumn();
 
             var card1 = backlog.GenerateNewCardForPlayer(player);
