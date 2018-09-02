@@ -6,6 +6,7 @@ namespace FeaturebanGame.Runner
 {
     class Program
     {
+        private const string OutputFileName = "result.txt";
         private static readonly int[] playersCount = {3, 5, 10};
         private static readonly int[] turnsCount = {15, 20};
         private static readonly int[] wipLimitCount = {0, 1, 2, 3, 4, 5};
@@ -27,10 +28,10 @@ namespace FeaturebanGame.Runner
                         }
 
                         cardsDone /= gamesCount;
-                        File.AppendAllText("result.txt", $"{cardsDone};");
+                        File.AppendAllText(OutputFileName, $"{cardsDone};");
                     }
 
-                    File.AppendAllText("result.txt", Environment.NewLine);
+                    File.AppendAllText(OutputFileName, Environment.NewLine);
                 }
             }
         }
