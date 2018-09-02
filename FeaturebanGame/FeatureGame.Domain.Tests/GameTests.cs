@@ -20,5 +20,20 @@ namespace FeatureGame.Domain.Tests
 
             Assert.AreEqual(1, cardsInDone);
         }
+
+        [Test]
+        public void WhenAnyAmountOfPlayersWithAllHeadsPlayAnyAmountOfTurns_ShouldBeZeroCardsInDone()
+        {
+            var coin = new TwoHeadCoin();
+            var game = Create.Game
+                .WithPlayers(5)
+                .WithTurns(10)
+                .WithCoin(coin)
+                .Please();
+
+            var cardsInDone = game.Play();
+
+            Assert.AreEqual(0, cardsInDone);
+        }
     }
 }
