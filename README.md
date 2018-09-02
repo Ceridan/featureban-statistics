@@ -1,6 +1,8 @@
 # featureban-statistics
 Featureban Statistics - учебный проект по теме Domain Driven Development в рамках DodoDevSchool#4.
 
+Авторы: Никита Стариченко (@wownetort), Михаил Кумачев (@ceridan)
+
 ## Условия задания
 Исследовать игру FeatureBan ([правила игры](https://www.dropbox.com/s/01mbav05k4bogen/featureban-slides-2.2-rus.pdf)) на зависимость пропускной способности доски от ограничения WIP.
 
@@ -12,6 +14,9 @@ Featureban Statistics - учебный проект по теме Domain Driven 
 
 Выходное значение:
 * Среднее количество карточек в колонке "Готово"
+
+## Комментарии к решению
+В рамках поставленной задачи по DDD мы решили не делать явные наследования от Entity или ValueObject, а использовать средства языка C#: class и struct соответственно. Логика в целом простая, если объект неизменяемый (immutable), в нашем случае например, Coin, то это ValueObject, в противном случае - Entity.
 
 ## Результаты
 
