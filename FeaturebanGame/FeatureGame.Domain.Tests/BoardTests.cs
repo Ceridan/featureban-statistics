@@ -16,10 +16,12 @@ namespace FeatureGame.Domain.Tests
 		        .WithBlockedCard()
 		        .Please();
 	        var player1 = Create.Player
+				.WithId(1)
 		        .WithBoard(board)
 		        .AssignAllAvailableCardsOnBoardToPlayer()
 		        .Please();
 	        var player2 = Create.Player
+		        .WithId(2)
 		        .WithBoard(board)
 		        .AssignAllBlockedCardsOnBoardToPlayer()
 		        .Please();

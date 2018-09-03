@@ -2,23 +2,23 @@ using System.Collections.Generic;
 
 namespace FeaturebanGame.Domain
 {
-    public class Game
+    public struct Game
     {
         private readonly int _turnCount;
         private readonly Board _board;
         private readonly ICoin _coin;
-
-        private List<Player> _players = new List<Player>();
+        private readonly List<Player> _players;
 
         public Game(ICoin coin, int playerCount, int wipLimit, int turnCount)
         {
             _turnCount = turnCount;
             _board = new Board(wipLimit);
             _coin = coin;
+            _players = new List<Player>();
 
             for (var i = 0; i < playerCount; i++)
             {
-                _players.Add(new Player(_board) { Id = i + 1 });
+                _players.Add(new Player(id: i + 1, name: null, board: _board));
             }
         }
 

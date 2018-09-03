@@ -3,22 +3,24 @@ using System.Linq;
 
 namespace FeaturebanGame.Domain
 {
-    public class Board
+    public struct Board
     {
-        private readonly BacklogColumn _backlog = new BacklogColumn();
-        private readonly List<WipColumn> _wips = new List<WipColumn>();
-        private readonly DoneColumn _done = new DoneColumn();
+        private readonly BacklogColumn _backlog;
+        private readonly List<WipColumn> _wips;
+        private readonly DoneColumn _done;
 
         public IReadOnlyList<WipColumn> Wips => _wips.AsReadOnly();
         public DoneColumn DoneColumn => _done;
 
         public Board(int limit)
         {
-            _wips.AddRange(new []
+            _backlog  = new BacklogColumn();
+            _wips = new List<WipColumn>
             {
                 new WipColumn(limit) { Number = 1 },
                 new WipColumn(limit) { Number = 2 },
-            });
+            };
+            _done = new DoneColumn();
         }
 
         public List<Card> GetOrderedPlayerCards(Player player)
