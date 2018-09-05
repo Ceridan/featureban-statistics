@@ -91,7 +91,7 @@ namespace FeatureGame.Domain.Tests
 		    var board = Create.Board.Please();
 		    var player = Create.Player.WithBoard(board).Please();
 
-		    board.CreateNewCardFor(player);
+		    board.TryCreateNewCardFor(player);
 
 		    var card = board.Wips.First().Cards.Single();
 		    Assert.AreEqual(CardState.Available, card.State);
@@ -103,7 +103,7 @@ namespace FeatureGame.Domain.Tests
 		    var board = Create.Board.Please();
 		    var player = Create.Player.WithBoard(board).Please();
 
-		    board.CreateNewCardFor(player);
+		    board.TryCreateNewCardFor(player);
 
 		    var card = board.Wips.First().Cards.Single();
 		    Assert.AreEqual(player, card.Player);
@@ -120,7 +120,7 @@ namespace FeatureGame.Domain.Tests
 			    .WithBoard(board)
 			    .Please();
 
-		    board.CreateNewCardFor(player);
+		    board.TryCreateNewCardFor(player);
 
 		    Assert.AreEqual(1, board.Wips.First().Cards.Count);
 	    }
@@ -133,7 +133,7 @@ namespace FeatureGame.Domain.Tests
 			    .WithCardOnFirstWipColumn(card)
 			    .Please();
 
-		    board.MoveCard(card);
+		    board.TryMoveCard(card);
 
 		    Assert.AreEqual(1, board.Wips.First().Cards.Count);
 	    }
@@ -146,7 +146,7 @@ namespace FeatureGame.Domain.Tests
 			    .WithCardOnFirstWipColumn(card)
 			    .Please();
 
-		    board.MoveCard(card);
+		    board.TryMoveCard(card);
 
 		    Assert.AreEqual(0, board.Wips.First().Cards.Count);
 		    Assert.AreEqual(1, board.Wips.Last().Cards.Count);
@@ -160,7 +160,7 @@ namespace FeatureGame.Domain.Tests
 			    .WithCardOnSecondWipColumn(card)
 			    .Please();
 
-		    board.MoveCard(card);
+		    board.TryMoveCard(card);
 
 		    Assert.AreEqual(0, board.Wips.Last().Cards.Count);
 		    Assert.AreEqual(1, board.DoneColumn.CardCount);
@@ -176,7 +176,7 @@ namespace FeatureGame.Domain.Tests
 			    .WithCardOnSecondWipColumn(new Card())
 			    .Please();
 
-		    board.MoveCard(card);
+		    board.TryMoveCard(card);
 
 		    Assert.AreEqual(1, board.Wips.First().Cards.Count);
 		    Assert.AreEqual(1, board.Wips.Last().Cards.Count);

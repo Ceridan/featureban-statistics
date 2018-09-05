@@ -18,6 +18,32 @@ namespace FeaturebanGame.Domain
             _coin = coin;
         }
 
+        public CoinDropResult DropTheCoin()
+        {
+            return _coin.Drop();
+        }
+
+        public void Play(CoinDropResult coin)
+        {
+            var cards = _board.GetOrderedPlayerCards(this);
+            if (coin == CoinDropResult.Tail)
+            {
+                if (WorkWithCards(cards)) return;
+                if (PullNewCard()) return;
+
+                var allCards = _board.GetOrderedCards();
+                WorkWithCards(allCards);
+                return;
+            }
+
+            var card = cards.FirstOrDefault(x => x.State == CardState.Available);
+            if (card != null)
+            {
+                _board.BlockCard(card);
+            }
+            PullNewCard();
+        }
+
         public static bool operator ==(Player player1, Player player2)
         {
             return player1.Name == player2.Name;
@@ -42,37 +68,9 @@ namespace FeaturebanGame.Domain
             return Name.GetHashCode();
         }
 
-        public CoinDropResult DropTheCoin()
-        {
-            return _coin.Drop();
-        }
-
-        public void Play(CoinDropResult coin)
-        {
-            var cards = _board.GetOrderedPlayerCards(this);
-            if (coin == CoinDropResult.Tail)
-            {
-                if (WorkWithCards(cards)) return;
-                if (PullNewCard()) return;
-
-                var allCards = _board.GetOrderedCards();
-                WorkWithCards(allCards);
-                return;
-            }
-            
-            var card = cards.FirstOrDefault(x => x.State == CardState.Available);
-            if (card != null)
-            {
-                _board.BlockCard(card);
-            }
-            PullNewCard();
-        }
-
         private bool PullNewCard()
         {
-            bool result = _board.CreateNewCardFor(this);
-            if (result) return true;
-            return false;
+            return _board.TryCreateNewCardFor(this);
         }
 
         private bool WorkWithCards(List<Card> cards)
@@ -80,7 +78,7 @@ namespace FeaturebanGame.Domain
             var availableCards = cards.Where(x => x.State == CardState.Available);
             foreach (var card in availableCards)
             {
-                var result = _board.MoveCard(card);
+                var result = _board.TryMoveCard(card);
                 if (result) return true;
             }
 

@@ -1,92 +1,140 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace FeaturebanGame.Domain
 {
     public struct Board
     {
-        private readonly BacklogColumn _backlog;
-        private readonly List<WipColumn> _wips;
-        private readonly DoneColumn _done;
+        private readonly int _limit;
 
-        public IReadOnlyList<WipColumn> Wips => _wips.AsReadOnly();
-        public DoneColumn DoneColumn => _done;
+        public BacklogColumn BackLog { get; }
+        public WipColumn Dev { get; }
+        public WipColumn Test { get; }
+        public DoneColumn Done { get; }
 
         public Board(int limit)
         {
-            _backlog  = new BacklogColumn();
-            _wips = new List<WipColumn>
-            {
-                new WipColumn(limit) { Number = 1 },
-                new WipColumn(limit) { Number = 2 },
-            };
-            _done = new DoneColumn();
+            _limit = limit;
+            BackLog  = new BacklogColumn();
+            Dev = new WipColumn(name: "Dev", limit: limit);
+            Test = new WipColumn(name: "Test", limit: limit);
+            Done = new DoneColumn();
         }
 
         public List<Card> GetOrderedPlayerCards(Player player)
         {
             var cards = new List<Card>();
-            foreach (var wipColumn in _wips.OrderByDescending(x => x.Number))
-            {
-                cards.AddRange(wipColumn.Cards.Where(x => x.Player == player));
-            }
-
+            cards.AddRange(Test.Cards.Where(x => x.Player == player));
+            cards.AddRange(Dev.Cards.Where(x => x.Player == player));
             return cards;
         }
 
         public List<Card> GetOrderedCards()
         {
             var cards = new List<Card>();
-            foreach (var wipColumn in _wips.OrderByDescending(x => x.Number))
-            {
-                cards.AddRange(wipColumn.Cards);
-            }
-
+            cards.AddRange(Test.Cards);
+            cards.AddRange(Dev.Cards);
             return cards;
         }
 
         public void BlockCard(Card card)
         {
-            card.State = CardState.Blocked;
+            ChangeCardState(card, CardState.Blocked);
         }
 
         public void UnblockCard(Card card)
         {
-            card.State = CardState.Available;
+            ChangeCardState(card, CardState.Available);
         }
 
-        public bool CreateNewCardFor(Player player)
+        public bool TryCreateNewCardFor(Player player)
         {
-            var card = _backlog.GenerateNewCardForPlayer(player);
-            return _wips.First().AddCard(card);
+            var card = BackLog.GenerateNewCardForPlayer(player);
+            return Dev.AddCard(card);
         }
 
-        public bool MoveCard(Card card)
+        public bool TryMoveCard(Card card)
         {
-            if (card.State == CardState.Blocked) return false;
-            
-            for (int i = 0; i < _wips.Count; i++)
+            if (card.State == CardState.Blocked)
+                return false;
+
+            if (Test.Cards.Contains(card))
             {
-                if (_wips[i].Cards.Contains(card))
-                {
-                    if (i == _wips.Count - 1)
-                    {
-                        _wips[i].RemoveCard(card);
-                        _done.CardCount++;
-                        return true;
-                    }
-
-                    if (_wips[i + 1].AddCard(card))
-                    {
-                        _wips[i].RemoveCard(card);
-                        return true;
-                    }
-
-                    return false;
-                }
+                Test.RemoveCard(card);
+                Done.CardCount++;
+                return true;
             }
-            
-            return false;
+
+            if (Dev.Cards.Contains(card))
+            {
+                if (Test.AddCard(card))
+                {
+                    Dev.RemoveCard(card);
+                    return true;
+                }
+
+                return false;
+            }
+
+            throw new NullReferenceException("Card must be attached to Dev or Test column");
+        }
+
+        public override string ToString()
+        {
+            var height = Math.Max(Dev.Cards.Count, Test.Cards.Count);
+
+            var sb = new StringBuilder();
+            sb.AppendLine(
+                _limit > 0
+                    ? "| Backlog |  Dev (3) | Test (3) | Done |"
+                    : "| Backlog |   Dev    |   Test   | Done |"
+            );
+
+            for (var i = 0; i < height; i++)
+            {
+                var devCard = Dev.Cards.Count > i
+                    ? Dev.Cards[i].ToString()
+                    : "      ";
+
+                var testCard = Test.Cards.Count > i
+                    ? Test.Cards[i].ToString()
+                    : "      ";
+
+                var doneCount = i == 0
+                    ? $"{Done.CardCount}".PadLeft(4, ' ')
+                    : "    ";
+
+                sb.AppendLine($"|         |  {devCard}  |  {testCard}  | {doneCount} |");
+            }
+
+            return sb.ToString();
+        }
+
+        private void ChangeCardState(Card card, CardState newState)
+        {
+            if (card.State == newState)
+                return;
+
+            var wip = GetCardColumn(card);
+
+            if (wip == null)
+                throw new NullReferenceException("Card must be attached to Dev or Test column");
+
+            var newCard = CardFabric.CreateCard(card.Player, newState);
+            wip.ReplaceCard(card, newCard);
+        }
+
+        private WipColumn GetCardColumn(Card card)
+        {
+            if (Dev.Cards.Contains(card))
+                return Dev;
+
+            if (Test.Cards.Contains(card))
+                return Test;
+
+            return null;
         }
     }
 }

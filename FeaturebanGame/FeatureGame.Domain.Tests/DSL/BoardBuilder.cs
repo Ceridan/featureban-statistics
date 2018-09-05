@@ -15,11 +15,11 @@ namespace FeatureGame.Domain.Tests.DSL
             var board = new Board(_limit);
             foreach (var card in _cardsFirst)
             {
-                board.Wips.First().AddCard(card);
+                board.Dev.AddCard(card);
             }
             foreach (var card in _cardsSecond)
             {
-                board.Wips.Last().AddCard(card);
+                board.Test.AddCard(card);
             }
             
             return board;

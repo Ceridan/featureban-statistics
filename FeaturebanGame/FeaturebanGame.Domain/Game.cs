@@ -6,14 +6,12 @@ namespace FeaturebanGame.Domain
     {
         private readonly int _turnsCount;
         private readonly Board _board;
-        private readonly ICoin _coin;
         private readonly List<Player> _players;
 
         public Game(IEnumerable<string> playerNames, int turnsCount, int wipLimit, ICoin coin)
         {
             _turnsCount = turnsCount;
             _board = new Board(wipLimit);
-            _coin = coin;
             _players = new List<Player>();
 
             foreach (var playerName in playerNames)
@@ -29,7 +27,7 @@ namespace FeaturebanGame.Domain
                 NextTurn();
             }
 
-            return _board.DoneColumn.CardCount;
+            return _board.Done.CardCount;
         }
 
         private void NextTurn()

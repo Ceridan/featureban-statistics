@@ -16,32 +16,44 @@ namespace FeaturebanGame.Runner
 
         static void Main(string[] args)
         {
-            foreach (var turns in turnsCount)
-            {
-                foreach (var players in playersCount)
-                {
-                    foreach (var wipLimit in wipLimitCount)
-                    {
-                        double cardsDone = 0;
+//            foreach (var turns in turnsCount)
+//            {
+//                foreach (var players in playersCount)
+//                {
+//                    foreach (var wipLimit in wipLimitCount)
+//                    {
+//                        double cardsDone = 0;
+//
+//                        for (var i = 0; i < _gamesCount; i++)
+//                        {
+//                            var game = new Game(
+//                                playerNames: playerNames.Take(players),
+//                                turnsCount: turns,
+//                                wipLimit: wipLimit,
+//                                coin: new Coin()
+//                            );
+//                            cardsDone += game.Play();
+//                        }
+//
+//                        cardsDone /= _gamesCount;
+//                        File.AppendAllText(OutputFileName, $"{cardsDone};");
+//                    }
+//
+//                    File.AppendAllText(OutputFileName, Environment.NewLine);
+//                }
+//            }
 
-                        for (var i = 0; i < _gamesCount; i++)
-                        {
-                            var game = new Game(
-                                playerNames: playerNames.Take(players),
-                                turnsCount: turns,
-                                wipLimit: wipLimit,
-                                coin: new Coin()
-                            );
-                            cardsDone += game.Play();
-                        }
+            var coin = new Coin();
+            var board = new Board(0);
+            var mikhail = new Player("MK", board, coin);
+            var nikita = new Player("NS", board, coin);
 
-                        cardsDone /= _gamesCount;
-                        File.AppendAllText(OutputFileName, $"{cardsDone};");
-                    }
+            board.Dev.AddCard(CardFabric.CreateCard(mikhail, CardState.Available));
+            board.Test.AddCard(CardFabric.CreateCard(nikita, CardState.Blocked));
+            board.Test.AddCard(CardFabric.CreateCard(mikhail, CardState.Available));
+            board.Done.CardCount = 25;
 
-                    File.AppendAllText(OutputFileName, Environment.NewLine);
-                }
-            }
+            Console.WriteLine(board);
         }
     }
 }
