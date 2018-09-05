@@ -11,7 +11,7 @@ namespace FeatureGame.Domain.Tests
         {
             var coin = new TwoTailCoin();
             var game = Create.Game
-                .WithPlayers(1)
+                .WithPlayers(new [] { "MK" })
                 .WithTurns(3)
                 .WithCoin(coin)
                 .Please();
@@ -26,7 +26,7 @@ namespace FeatureGame.Domain.Tests
         {
             var coin = new TwoHeadCoin();
             var game = Create.Game
-                .WithPlayers(5)
+                .WithPlayers(new [] { "MK", "NS", "AB", "DP", "AM" })
                 .WithTurns(10)
                 .WithCoin(coin)
                 .Please();

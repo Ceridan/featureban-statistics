@@ -7,20 +7,20 @@ namespace FeaturebanGame.Domain
     public struct Player
     {
         private readonly Board _board;
+        private readonly ICoin _coin;
 
-        public int Id { get; }
         public string Name { get;  }
 
-        public Player(int id, string name, Board board)
+        public Player(string name, Board board, ICoin coin)
         {
-            Id = id;
             Name = name ?? string.Empty;
             _board = board;
+            _coin = coin;
         }
 
         public static bool operator ==(Player player1, Player player2)
         {
-            return player1.Id == player2.Id && player1.Name == player2.Name;
+            return player1.Name == player2.Name;
         }
 
         public static bool operator !=(Player player1, Player player2)
@@ -34,27 +34,26 @@ namespace FeaturebanGame.Domain
                 return false;
 
             var player = (Player) obj;
-            return Id == player.Id && Name == player.Name;
+            return Name == player.Name;
         }
 
         public override int GetHashCode()
         {
-            unchecked
-            {
-                var hash = 17;
-                hash = hash * 23 + Id.GetHashCode();
-                hash = hash * 23 + Name.GetHashCode();
-                return hash;
-            }
+            return Name.GetHashCode();
         }
 
-        public void DoWork(CoinDropResult drop)
+        public CoinDropResult DropTheCoin()
+        {
+            return _coin.Drop();
+        }
+
+        public void Play(CoinDropResult coin)
         {
             var cards = _board.GetOrderedPlayerCards(this);
-            if (drop == CoinDropResult.Tail)
+            if (coin == CoinDropResult.Tail)
             {
                 if (WorkWithCards(cards)) return;
-                if (TakeNewCard()) return;
+                if (PullNewCard()) return;
 
                 var allCards = _board.GetOrderedCards();
                 WorkWithCards(allCards);
@@ -66,12 +65,12 @@ namespace FeaturebanGame.Domain
             {
                 _board.BlockCard(card);
             }
-            TakeNewCard();
+            PullNewCard();
         }
 
-        private bool TakeNewCard()
+        private bool PullNewCard()
         {
-            bool result = _board.AddNewCardFor(this);
+            bool result = _board.CreateNewCardFor(this);
             if (result) return true;
             return false;
         }

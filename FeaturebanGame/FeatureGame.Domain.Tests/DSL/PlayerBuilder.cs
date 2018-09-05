@@ -6,8 +6,9 @@ namespace FeatureGame.Domain.Tests.DSL
 {
     public class PlayerBuilder
     {
-        private int _id = 1;
+        private string _name = "AB";
         private Board _board;
+        private ICoin _coin;
         private List<Card> _cards = new List<Card>();
 
         public PlayerBuilder WithBoard(Board board)
@@ -16,15 +17,15 @@ namespace FeatureGame.Domain.Tests.DSL
             return this;
         }
 
-        public PlayerBuilder WithId(int id)
+        public PlayerBuilder WithName(string name)
         {
-            _id = id;
+            _name = name;
             return this;
         }
 
         public Player Please()
         {
-            var player = new Player(id: _id, name: null, board: _board);;
+            var player = new Player(_name, _board, _coin ?? new Coin());
             foreach (var card in _cards)
             {
                 card.Player = player;

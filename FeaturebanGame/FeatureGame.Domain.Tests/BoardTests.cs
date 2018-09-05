@@ -16,12 +16,12 @@ namespace FeatureGame.Domain.Tests
 		        .WithBlockedCard()
 		        .Please();
 	        var player1 = Create.Player
-				.WithId(1)
+				.WithName("MK")
 		        .WithBoard(board)
 		        .AssignAllAvailableCardsOnBoardToPlayer()
 		        .Please();
 	        var player2 = Create.Player
-		        .WithId(2)
+		        .WithName("NS")
 		        .WithBoard(board)
 		        .AssignAllBlockedCardsOnBoardToPlayer()
 		        .Please();
@@ -91,7 +91,7 @@ namespace FeatureGame.Domain.Tests
 		    var board = Create.Board.Please();
 		    var player = Create.Player.WithBoard(board).Please();
 
-		    board.AddNewCardFor(player);
+		    board.CreateNewCardFor(player);
 
 		    var card = board.Wips.First().Cards.Single();
 		    Assert.AreEqual(CardState.Available, card.State);
@@ -103,7 +103,7 @@ namespace FeatureGame.Domain.Tests
 		    var board = Create.Board.Please();
 		    var player = Create.Player.WithBoard(board).Please();
 
-		    board.AddNewCardFor(player);
+		    board.CreateNewCardFor(player);
 
 		    var card = board.Wips.First().Cards.Single();
 		    Assert.AreEqual(player, card.Player);
@@ -120,7 +120,7 @@ namespace FeatureGame.Domain.Tests
 			    .WithBoard(board)
 			    .Please();
 
-		    board.AddNewCardFor(player);
+		    board.CreateNewCardFor(player);
 
 		    Assert.AreEqual(1, board.Wips.First().Cards.Count);
 	    }

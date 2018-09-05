@@ -14,7 +14,7 @@ namespace FeatureGame.Domain.Tests
             var board = Create.Board.Please();
             var player = Create.Player.WithBoard(board).Please();
 
-            player.DoWork(CoinDropResult.Head);
+            player.Play(CoinDropResult.Head);
 
             var playerCards = board.GetOrderedPlayerCards(player);
             Assert.AreEqual(1, playerCards.Count);
@@ -26,7 +26,7 @@ namespace FeatureGame.Domain.Tests
             var board = Create.Board.Please();
             var player = Create.Player.WithBoard(board).Please();
 
-            player.DoWork(CoinDropResult.Tail);
+            player.Play(CoinDropResult.Tail);
 
             var playerCards = board.GetOrderedPlayerCards(player);
             Assert.AreEqual(1, playerCards.Count);
@@ -38,7 +38,7 @@ namespace FeatureGame.Domain.Tests
             var board = Create.Board.WithBlockedCard().Please();
             var player = Create.Player.WithBoard(board).AssignAllCardsOnBoardToPlayer().Please();
 
-            player.DoWork(CoinDropResult.Head);
+            player.Play(CoinDropResult.Head);
 
             var playerCards = board.GetOrderedPlayerCards(player);
             Assert.AreEqual(2, playerCards.Count);
@@ -50,7 +50,7 @@ namespace FeatureGame.Domain.Tests
             var board = Create.Board.WithBlockedCard().Please();
             var player = Create.Player.WithBoard(board).AssignAllCardsOnBoardToPlayer().Please();
 
-            player.DoWork(CoinDropResult.Tail);
+            player.Play(CoinDropResult.Tail);
 
             var playerCard = board.GetOrderedPlayerCards(player).Single();
             Assert.AreEqual(CardState.Available, playerCard.State);
@@ -62,7 +62,7 @@ namespace FeatureGame.Domain.Tests
             var board = Create.Board.WithAvailableCard().Please();
             var player = Create.Player.WithBoard(board).AssignAllCardsOnBoardToPlayer().Please();
 
-            player.DoWork(CoinDropResult.Head);
+            player.Play(CoinDropResult.Head);
 
             var playerCards = board.GetOrderedPlayerCards(player);
             Assert.AreEqual(2, playerCards.Count);
@@ -75,7 +75,7 @@ namespace FeatureGame.Domain.Tests
             var board = Create.Board.WithAvailableCard().Please();
             var player = Create.Player.WithBoard(board).AssignAllCardsOnBoardToPlayer().Please();
 
-            player.DoWork(CoinDropResult.Tail);
+            player.Play(CoinDropResult.Tail);
 
             Assert.AreEqual(false, board.Wips.First().Cards.Any());
             Assert.AreEqual(true, board.Wips.Last().Cards.Any());
@@ -87,7 +87,7 @@ namespace FeatureGame.Domain.Tests
             var board = Create.Board.WithAvailableCardOnSecondWipColumn().Please();
             var player = Create.Player.WithBoard(board).AssignAllCardsOnBoardToPlayer().Please();
 
-            player.DoWork(CoinDropResult.Tail);
+            player.Play(CoinDropResult.Tail);
 
             Assert.AreEqual(false, board.Wips.Last().Cards.Any());
             Assert.AreEqual(1, board.DoneColumn.CardCount);
@@ -101,16 +101,16 @@ namespace FeatureGame.Domain.Tests
                 .WithAvailableCard()
                 .Please();
             var passivePlayer = Create.Player
-                .WithId(1)
+                .WithName("MK")
                 .WithBoard(board)
                 .AssignAllCardsOnBoardToPlayer()
                 .Please();
             var activePlayer = Create.Player
-                .WithId(2)
+                .WithName("NS")
                 .WithBoard(board)
                 .Please();
 
-            activePlayer.DoWork(CoinDropResult.Tail);
+            activePlayer.Play(CoinDropResult.Tail);
 
             Assert.AreEqual(false, board.Wips.First().Cards.Any());
             Assert.AreEqual(true, board.Wips.Last().Cards.Any());
@@ -124,16 +124,16 @@ namespace FeatureGame.Domain.Tests
                 .WithBlockedCard()
                 .Please();
             var passivePlayer = Create.Player
-                .WithId(1)
+                .WithName("MK")
                 .WithBoard(board)
                 .AssignAllCardsOnBoardToPlayer()
                 .Please();
             var activePlayer = Create.Player
-                .WithId(2)
+                .WithName("NS")
                 .WithBoard(board)
                 .Please();
 
-            activePlayer.DoWork(CoinDropResult.Tail);
+            activePlayer.Play(CoinDropResult.Tail);
 
             var passivePlayerCard = board.GetOrderedPlayerCards(passivePlayer).Single();
             Assert.AreEqual(CardState.Available, passivePlayerCard.State);

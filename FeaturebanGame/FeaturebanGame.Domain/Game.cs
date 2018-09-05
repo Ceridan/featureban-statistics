@@ -4,27 +4,27 @@ namespace FeaturebanGame.Domain
 {
     public struct Game
     {
-        private readonly int _turnCount;
+        private readonly int _turnsCount;
         private readonly Board _board;
         private readonly ICoin _coin;
         private readonly List<Player> _players;
 
-        public Game(ICoin coin, int playerCount, int wipLimit, int turnCount)
+        public Game(IEnumerable<string> playerNames, int turnsCount, int wipLimit, ICoin coin)
         {
-            _turnCount = turnCount;
+            _turnsCount = turnsCount;
             _board = new Board(wipLimit);
             _coin = coin;
             _players = new List<Player>();
 
-            for (var i = 0; i < playerCount; i++)
+            foreach (var playerName in playerNames)
             {
-                _players.Add(new Player(id: i + 1, name: null, board: _board));
+                _players.Add(new Player(playerName, _board, coin));
             }
         }
 
         public int Play()
         {
-            for (var i = 0; i < _turnCount; i++)
+            for (var i = 0; i < _turnsCount; i++)
             {
                 NextTurn();
             }
@@ -36,7 +36,8 @@ namespace FeaturebanGame.Domain
         {
             foreach (var player in _players)
             {
-                player.DoWork(_coin.Drop());
+                var coin = player.DropTheCoin();
+                player.Play(coin);
             }
         }
     }

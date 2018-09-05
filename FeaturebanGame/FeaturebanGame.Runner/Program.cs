@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using FeaturebanGame.Domain;
 
 namespace FeaturebanGame.Runner
@@ -7,10 +8,11 @@ namespace FeaturebanGame.Runner
     class Program
     {
         private const string OutputFileName = "result.txt";
-        private static readonly int[] playersCount = {3, 5, 10};
+        private static readonly int _gamesCount = 1000;
         private static readonly int[] turnsCount = {15, 20};
         private static readonly int[] wipLimitCount = {0, 1, 2, 3, 4, 5};
-        private static int gamesCount = 1000;
+        private static readonly int[] playersCount = {3, 5, 10};
+        private static readonly string[] playerNames = { "NS", "MK", "AB", "AM", "YP", "SZ", "PP", "DA", "DB", "DP" };
 
         static void Main(string[] args)
         {
@@ -21,13 +23,19 @@ namespace FeaturebanGame.Runner
                     foreach (var wipLimit in wipLimitCount)
                     {
                         double cardsDone = 0;
-                        for (var i = 0; i < gamesCount; i++)
+
+                        for (var i = 0; i < _gamesCount; i++)
                         {
-                            var game = new Game(new Coin(), playerCount: players, wipLimit: wipLimit, turnCount: turns);
+                            var game = new Game(
+                                playerNames: playerNames.Take(players),
+                                turnsCount: turns,
+                                wipLimit: wipLimit,
+                                coin: new Coin()
+                            );
                             cardsDone += game.Play();
                         }
 
-                        cardsDone /= gamesCount;
+                        cardsDone /= _gamesCount;
                         File.AppendAllText(OutputFileName, $"{cardsDone};");
                     }
 
