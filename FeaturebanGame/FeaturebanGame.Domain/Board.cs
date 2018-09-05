@@ -83,12 +83,12 @@ namespace FeaturebanGame.Domain
 
         public override string ToString()
         {
-            var height = Math.Max(Dev.Cards.Count, Test.Cards.Count);
+            var height = Math.Max(Math.Max(Dev.Cards.Count, Test.Cards.Count), 1);
 
             var sb = new StringBuilder();
             sb.AppendLine(
                 _limit > 0
-                    ? "| Backlog |  Dev (3) | Test (3) | Done |"
+                    ? $"| Backlog |  Dev ({_limit}) | Test ({_limit}) | Done |"
                     : "| Backlog |   Dev    |   Test   | Done |"
             );
 

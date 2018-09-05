@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using FeaturebanGame.Domain;
@@ -16,35 +17,35 @@ namespace FeaturebanGame.Runner
 
         static void Main(string[] args)
         {
-//            foreach (var turns in turnsCount)
-//            {
-//                foreach (var players in playersCount)
-//                {
-//                    foreach (var wipLimit in wipLimitCount)
-//                    {
-//                        double cardsDone = 0;
-//
-//                        for (var i = 0; i < _gamesCount; i++)
-//                        {
-//                            var game = new Game(
-//                                playerNames: playerNames.Take(players),
-//                                turnsCount: turns,
-//                                wipLimit: wipLimit,
-//                                coin: new Coin()
-//                            );
-//                            cardsDone += game.Play();
-//                        }
-//
-//                        cardsDone /= _gamesCount;
-//                        File.AppendAllText(OutputFileName, $"{cardsDone};");
-//                    }
-//
-//                    File.AppendAllText(OutputFileName, Environment.NewLine);
-//                }
-//            }
+            foreach (var turns in turnsCount)
+            {
+                foreach (var players in playersCount)
+                {
+                    foreach (var wipLimit in wipLimitCount)
+                    {
+                        double cardsDone = 0;
+
+                        for (var i = 0; i < _gamesCount; i++)
+                        {
+                            var game = new Game(
+                                playerNames: playerNames.Take(players),
+                                turnsCount: turns,
+                                wipLimit: wipLimit,
+                                coin: new Coin()
+                            );
+                            cardsDone += game.Play();
+                        }
+
+                        cardsDone /= _gamesCount;
+                        File.AppendAllText(OutputFileName, $"{cardsDone};");
+                    }
+
+                    File.AppendAllText(OutputFileName, Environment.NewLine);
+                }
+            }
 
             var coin = new Coin();
-            var board = new Board(0);
+            var board = new Board(5);
             var mikhail = new Player("MK", board, coin);
             var nikita = new Player("NS", board, coin);
 
@@ -54,6 +55,12 @@ namespace FeaturebanGame.Runner
             board.Done.CardCount = 25;
 
             Console.WriteLine(board);
+
+//            var sketch = @"
+//| Backlog |  Dev (5) | Test (5) | Done |
+//|         |  [MK  ]  |  [NS B]  |   25 |
+//|         |          |  [MK  ]  |      |
+//";
         }
     }
 }
