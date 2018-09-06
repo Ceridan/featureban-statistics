@@ -37,7 +37,7 @@ namespace FeaturebanGame.Domain
             }
 
             var card = cards.FirstOrDefault(x => x.State == CardState.Available);
-            if (card != null)
+            if (card.Id > 0)
             {
                 _board.BlockCard(card);
             }
@@ -78,12 +78,12 @@ namespace FeaturebanGame.Domain
             var availableCards = cards.Where(x => x.State == CardState.Available);
             foreach (var card in availableCards)
             {
-                var result = _board.TryMoveCard(card);
-                if (result) return true;
+                if (_board.TryMoveCard(card))
+                    return true;
             }
 
             var blockedCard = cards.FirstOrDefault(x => x.State == CardState.Blocked);
-            if (blockedCard != null)
+            if (blockedCard.Id > 0)
             {
                 _board.UnblockCard(blockedCard);
                 return true;

@@ -23,8 +23,7 @@ namespace FeatureGame.Domain.Tests
 
         [Test]
         public void WhenAnyAmountOfPlayersWithAllHeadsPlayAnyAmountOfTurns_ShouldBeZeroCardsInDone()
-        {
-            var coin = new TwoHeadCoin();
+        {var coin = new TwoHeadCoin();
             var game = Create.Game
                 .WithPlayers(new [] { "MK", "NS", "AB", "DP", "AM" })
                 .WithTurns(10)

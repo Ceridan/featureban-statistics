@@ -43,24 +43,6 @@ namespace FeaturebanGame.Runner
                     File.AppendAllText(OutputFileName, Environment.NewLine);
                 }
             }
-
-            var coin = new Coin();
-            var board = new Board(5);
-            var mikhail = new Player("MK", board, coin);
-            var nikita = new Player("NS", board, coin);
-
-            board.Dev.AddCard(CardFabric.CreateCard(mikhail, CardState.Available));
-            board.Test.AddCard(CardFabric.CreateCard(nikita, CardState.Blocked));
-            board.Test.AddCard(CardFabric.CreateCard(mikhail, CardState.Available));
-            board.Done.CardCount = 25;
-
-            Console.WriteLine(board);
-
-//            var sketch = @"
-//| Backlog |  Dev (5) | Test (5) | Done |
-//|         |  [MK  ]  |  [NS B]  |   25 |
-//|         |          |  [MK  ]  |      |
-//";
         }
     }
 }

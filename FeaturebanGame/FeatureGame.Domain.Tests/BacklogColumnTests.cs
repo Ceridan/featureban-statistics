@@ -8,16 +8,14 @@ namespace FeatureGame.Domain.Tests
     public class BacklogColumnTests
     {
         [Test]
-        public void ShouldReturnSequenceIdNumbers_WhenGenerateNewCards()
+        public void WhenBacklogColumnGenerateNewCard_ShouldAssignItToPlayer()
         {
             var player = Create.Player.Please();
             var backlog = new BacklogColumn();
 
-            var card1 = backlog.GenerateNewCardForPlayer(player);
-            var card2 = backlog.GenerateNewCardForPlayer(player);
+            var card = backlog.GenerateNewCardForPlayer(player);
 
-            Assert.AreEqual(1, card1.Id);
-            Assert.AreEqual(2, card2.Id);
+            Assert.AreEqual(player, card.Player);
         }
     }
 }

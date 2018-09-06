@@ -6,6 +6,14 @@ namespace FeatureGame.Domain.Tests.DSL
 {
     public static class BoardFabric
     {
+//| Backlog |  Dev (5) | Test (5) | Done |
+//|         |  [MK  ]  |  [NS B]  |   25 |
+//|         |          |  [MK  ]  |      |
+        public static Board CreateBoard(string boardSketch)
+        {
+            return CreateBoard(boardSketch, new Coin());
+        }
+
         public static Board CreateBoard(string boardSketch, ICoin coin)
         {
             var players = new List<Player>();
