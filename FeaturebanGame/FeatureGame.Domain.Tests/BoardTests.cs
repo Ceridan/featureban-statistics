@@ -53,7 +53,7 @@ namespace FeatureGame.Domain.Tests
         public void WhenPlayerDropsHeadAndDevLimitIsNotReached_ShouldBlockTheCardAndPullTheNewOne()
         {
             var board = Create.Board(@"
-| Backlog |  Dev     | Test     | Done |
+| Backlog |   Dev    |   Test   | Done |
 |         |  [MK  ]  |          |    0 |
 ");
             var mikhail = Create.Player
@@ -87,6 +87,26 @@ namespace FeatureGame.Domain.Tests
             AssertBoard(board, @"
 | Backlog |  Dev (1) | Test (1) | Done |
 |         |  [MK B]  |          |    0 |
+");
+        }
+
+        [Test]
+        public void WhenPlayerDropsTailAndHaveBlockedCard_ShouldUnblockCard()
+        {
+            var board = Create.Board(@"
+| Backlog |   Dev    |   Test   | Done |
+|         |  [MK B]  |          |    0 |
+");
+            var mikhail = Create.Player
+                .WithName("MK")
+                .WithBoard(board)
+                .Please();
+
+            mikhail.Play(CoinDropResult.Tail);
+
+            AssertBoard(board, @"
+| Backlog |   Dev    |   Test   | Done |
+|         |  [MK  ]  |          |    0 |
 ");
         }
 
