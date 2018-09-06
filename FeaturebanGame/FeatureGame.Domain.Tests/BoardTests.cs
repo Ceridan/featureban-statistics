@@ -130,6 +130,26 @@ namespace FeatureGame.Domain.Tests
 ");
         }
 
+        [Test]
+        public void WhenPlayerDropsTailAndCantPlayOwnCardsAndCantMoveCards_PlayerUnblockOtherCards()
+        {
+            var board = Create.Board(@"
+| Backlog |  Dev (1) | Test (1) | Done |
+|         |  [MK B]  |          |    0 |
+");
+            var nikita = Create.Player
+                .WithName("NS")
+                .WithBoard(board)
+                .Please();
+
+            nikita.Play(CoinFlipResult.Tail);
+
+            AssertBoard(board, @"
+| Backlog |  Dev (1) | Test (1) | Done |
+|         |  [MK  ]  |          |    0 |
+");
+        }
+
         private static void AssertBoard(Board board, string expectedBoardSketch)
         {
             var expected = expectedBoardSketch.Replace("\r\n", "").Replace("\n", "").Replace("\t", "").Replace(" ", "");
