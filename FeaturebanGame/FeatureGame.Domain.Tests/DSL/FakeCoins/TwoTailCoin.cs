@@ -4,9 +4,9 @@ namespace FeatureGame.Domain.Tests.DSL
 {
     public struct TwoTailCoin : ICoin
     {
-        public CoinDropResult Drop()
+        public CoinFlipResult Flip()
         {
-            return CoinDropResult.Tail;
+            return CoinFlipResult.Tail;
         }
     }
 }

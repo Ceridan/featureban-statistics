@@ -21,7 +21,7 @@ namespace FeatureGame.Domain.Tests
                 .WithBoard(board)
                 .Please();
 
-            mikhail.Play(CoinDropResult.Tail);
+            mikhail.Play(CoinFlipResult.Tail);
 
             AssertBoard(board, @"
 | Backlog |   Dev    |   Test   | Done |
@@ -41,7 +41,7 @@ namespace FeatureGame.Domain.Tests
                 .WithBoard(board)
                 .Please();
 
-            mikhail.Play(CoinDropResult.Tail);
+            mikhail.Play(CoinFlipResult.Tail);
 
             AssertBoard(board, @"
 | Backlog |   Dev    |   Test   | Done |
@@ -61,7 +61,7 @@ namespace FeatureGame.Domain.Tests
                 .WithBoard(board)
                 .Please();
 
-            mikhail.Play(CoinDropResult.Head);
+            mikhail.Play(CoinFlipResult.Head);
 
             AssertBoard(board, @"
 | Backlog |   Dev    |   Test   | Done |
@@ -82,7 +82,7 @@ namespace FeatureGame.Domain.Tests
                 .WithBoard(board)
                 .Please();
 
-            mikhail.Play(CoinDropResult.Head);
+            mikhail.Play(CoinFlipResult.Head);
 
             AssertBoard(board, @"
 | Backlog |  Dev (1) | Test (1) | Done |
@@ -102,7 +102,7 @@ namespace FeatureGame.Domain.Tests
                 .WithBoard(board)
                 .Please();
 
-            mikhail.Play(CoinDropResult.Tail);
+            mikhail.Play(CoinFlipResult.Tail);
 
             AssertBoard(board, @"
 | Backlog |   Dev    |   Test   | Done |

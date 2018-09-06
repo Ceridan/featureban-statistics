@@ -1,6 +1,6 @@
 namespace FeaturebanGame.Domain
 {
-    public enum CoinDropResult
+    public enum CoinFlipResult
     {
         Head = 0,
         Tail = 1

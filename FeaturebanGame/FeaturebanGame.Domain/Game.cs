@@ -34,7 +34,7 @@ namespace FeaturebanGame.Domain
         {
             foreach (var player in _players)
             {
-                var coin = player.DropTheCoin();
+                var coin = player.FlipTheCoin();
                 player.Play(coin);
             }
         }

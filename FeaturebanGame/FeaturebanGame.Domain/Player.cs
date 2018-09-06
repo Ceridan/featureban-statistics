@@ -18,15 +18,15 @@ namespace FeaturebanGame.Domain
             _coin = coin;
         }
 
-        public CoinDropResult DropTheCoin()
+        public CoinFlipResult FlipTheCoin()
         {
-            return _coin.Drop();
+            return _coin.Flip();
         }
 
-        public void Play(CoinDropResult coin)
+        public void Play(CoinFlipResult coin)
         {
             var cards = _board.GetOrderedPlayerCards(this);
-            if (coin == CoinDropResult.Tail)
+            if (coin == CoinFlipResult.Tail)
             {
                 if (WorkWithCards(cards)) return;
                 if (PullNewCard()) return;

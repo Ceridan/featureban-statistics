@@ -4,16 +4,16 @@ namespace FeaturebanGame.Domain
 {
     public interface ICoin
     {
-        CoinDropResult Drop();
+        CoinFlipResult Flip();
     }
 
     public struct Coin : ICoin
     {
         private static readonly Random _random = new Random();
 
-        public CoinDropResult Drop()
+        public CoinFlipResult Flip()
         {
-            return (CoinDropResult)_random.Next(0, 2);
+            return (CoinFlipResult)_random.Next(0, 2);
         }
     }
 }
