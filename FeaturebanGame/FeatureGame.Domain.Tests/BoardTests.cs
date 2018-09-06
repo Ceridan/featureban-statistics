@@ -10,7 +10,7 @@ namespace FeatureGame.Domain.Tests
     public class BoardTests
     {
         [Test]
-        public void WhenPlayerDropsTailAndTestLimitIsNotReached_ShouldMovePlayerCardToTestFromDev()
+        public void WhenPlayerDropsTailAndTestLimitIsNotReached_ShouldMoveAvailablePlayerCardFromDevToTest()
         {
             var board = Create.Board(@"
 | Backlog |  Dev     | Test     | Done |
@@ -26,6 +26,26 @@ namespace FeatureGame.Domain.Tests
             AssertBoard(board, @"
 | Backlog |   Dev    |   Test   | Done |
 |         |          |  [MK  ]  |    0 |
+");
+        }
+
+        [Test]
+        public void WhenPlayerDropsTailAndTestLimitIsNotReached_ShouldMoveAvailablePlayerCardFromTestToDone()
+        {
+            var board = Create.Board(@"
+| Backlog |   Dev    |   Test   | Done |
+|         |          |  [MK  ]  |    0 |
+");
+            var mikhail = Create.Player
+                .WithName("MK")
+                .WithBoard(board)
+                .Please();
+
+            mikhail.Play(CoinDropResult.Tail);
+
+            AssertBoard(board, @"
+| Backlog |   Dev    |   Test   | Done |
+|         |          |          |    1 |
 ");
         }
 
