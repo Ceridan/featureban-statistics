@@ -150,6 +150,27 @@ namespace FeatureGame.Domain.Tests
 ");
         }
 
+        [Test]
+        public void WhenBoardIsEmptyAndPlayerPlayTurnWithAnyCoinFlipResult_ShouldPullNewCardToDev()
+        {
+            var board = Create.Board(@"
+| Backlog |    Dev   |   Test   | Done |
+|         |          |          |    0 |
+");
+            var mikhail = Create.Player
+                .WithName("MK")
+                .WithBoard(board)
+                .Please();
+
+            var coin = mikhail.FlipTheCoin();
+            mikhail.Play(coin);
+
+            AssertBoard(board, @"
+| Backlog |   Dev    |   Test   | Done |
+|         |  [MK  ]  |          |    0 |
+");
+        }
+
         private static void AssertBoard(Board board, string expectedBoardSketch)
         {
             var expected = expectedBoardSketch.Replace("\r\n", "").Replace("\n", "").Replace("\t", "").Replace(" ", "");
