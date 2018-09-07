@@ -7,20 +7,18 @@ namespace FeaturebanGame.Domain
     public struct Player
     {
         private readonly Board _board;
-        private readonly ICoin _coin;
 
         public string Name { get;  }
 
-        public Player(string name, Board board, ICoin coin)
+        public Player(string name, Board board)
         {
             Name = name ?? string.Empty;
             _board = board;
-            _coin = coin;
         }
 
-        public CoinFlipResult FlipTheCoin()
+        public CoinFlipResult FlipTheCoin(ICoin coin)
         {
-            return _coin.Flip();
+            return coin.Flip();
         }
 
         public void Play(CoinFlipResult coin)

@@ -11,10 +11,5 @@ namespace FeatureGame.Domain.Tests.DSL
         {
             return BoardFabric.CreateBoard(boardSketch);
         }
-
-        public static Board Board(string boardSketch, ICoin coin)
-        {
-            return BoardFabric.CreateBoard(boardSketch, coin);
-        }
     }
 }

@@ -162,8 +162,8 @@ namespace FeatureGame.Domain.Tests
                 .WithBoard(board)
                 .Please();
 
-            var coin = mikhail.FlipTheCoin();
-            mikhail.Play(coin);
+            var coinFlipResult = mikhail.FlipTheCoin(new Coin());
+            mikhail.Play(coinFlipResult);
 
             AssertBoard(board, @"
 | Backlog |   Dev    |   Test   | Done |

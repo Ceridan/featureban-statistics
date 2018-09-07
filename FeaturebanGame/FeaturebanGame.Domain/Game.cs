@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace FeaturebanGame.Domain
@@ -6,17 +7,19 @@ namespace FeaturebanGame.Domain
     {
         private readonly int _turnsCount;
         private readonly Board _board;
+        private readonly ICoin _coin;
         private readonly List<Player> _players;
 
         public Game(IEnumerable<string> playerNames, int turnsCount, int wipLimit, ICoin coin)
         {
             _turnsCount = turnsCount;
             _board = new Board(wipLimit);
+            _coin = coin;
             _players = new List<Player>();
 
             foreach (var playerName in playerNames)
             {
-                _players.Add(new Player(playerName, _board, coin));
+                _players.Add(new Player(playerName, _board));
             }
         }
 
@@ -34,8 +37,8 @@ namespace FeaturebanGame.Domain
         {
             foreach (var player in _players)
             {
-                var coin = player.FlipTheCoin();
-                player.Play(coin);
+                var coinFlipResult = player.FlipTheCoin(_coin);
+                player.Play(coinFlipResult);
             }
         }
     }

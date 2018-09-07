@@ -8,7 +8,6 @@ namespace FeatureGame.Domain.Tests.DSL
     {
         private string _name = "AB";
         private Board _board;
-        private ICoin _coin;
 
         public PlayerBuilder WithBoard(Board board)
         {
@@ -22,15 +21,9 @@ namespace FeatureGame.Domain.Tests.DSL
             return this;
         }
 
-        public PlayerBuilder WithCoin(ICoin coin)
-        {
-            _coin = coin;
-            return this;
-        }
-
         public Player Please()
         {
-            var player = new Player(_name, _board, _coin ?? new Coin());
+            var player = new Player(_name, _board);
             return player;
         }
     }

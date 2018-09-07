@@ -9,12 +9,8 @@ namespace FeatureGame.Domain.Tests.DSL
 //| Backlog |  Dev (5) | Test (5) | Done |
 //|         |  [MK  ]  |  [NS B]  |   25 |
 //|         |          |  [MK  ]  |      |
-        public static Board CreateBoard(string boardSketch)
-        {
-            return CreateBoard(boardSketch, new Coin());
-        }
 
-        public static Board CreateBoard(string boardSketch, ICoin coin)
+        public static Board CreateBoard(string boardSketch)
         {
             var players = new List<Player>();
 
@@ -37,7 +33,7 @@ namespace FeatureGame.Domain.Tests.DSL
                 var devCard = ParseCard(columns[1]);
                 if (!string.IsNullOrEmpty(devCard.playerName))
                 {
-                    var player = new Player(devCard.playerName, board, coin);
+                    var player = new Player(devCard.playerName, board);
                     board.Dev.AddCard(CardFabric.CreateCard(player, devCard.cardState));
                     players.Add(player);
                 }
@@ -45,7 +41,7 @@ namespace FeatureGame.Domain.Tests.DSL
                 var testCard = ParseCard(columns[2]);
                 if (!string.IsNullOrEmpty(testCard.playerName))
                 {
-                    var player = new Player(testCard.playerName, board, coin);
+                    var player = new Player(testCard.playerName, board);
                     board.Test.AddCard(CardFabric.CreateCard(player, devCard.cardState));
                     players.Add(player);
                 }
