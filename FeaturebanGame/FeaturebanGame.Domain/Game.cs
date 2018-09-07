@@ -3,8 +3,9 @@ using System.Collections.Generic;
 
 namespace FeaturebanGame.Domain
 {
-    public struct Game
+    public class Game
     {
+        private readonly Guid _id = Guid.NewGuid();
         private readonly int _turnsCount;
         private readonly Board _board;
         private readonly ICoin _coin;
@@ -22,6 +23,8 @@ namespace FeaturebanGame.Domain
                 _players.Add(new Player(playerName, _board));
             }
         }
+
+        public Guid Id => _id;
 
         public int Play()
         {
