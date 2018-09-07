@@ -21,7 +21,7 @@ namespace FeatureGame.Domain.Tests
                 .WithBoard(board)
                 .Please();
 
-            mikhail.Play(CoinFlipResult.Tail);
+            board.MakeTurnFor(mikhail, CoinFlipResult.Tail);
 
             AssertBoard(board, @"
 | Backlog |   Dev    |   Test   | Done |
@@ -41,7 +41,7 @@ namespace FeatureGame.Domain.Tests
                 .WithBoard(board)
                 .Please();
 
-            mikhail.Play(CoinFlipResult.Tail);
+            board.MakeTurnFor(mikhail, CoinFlipResult.Tail);
 
             AssertBoard(board, @"
 | Backlog |   Dev    |   Test   | Done |
@@ -61,7 +61,7 @@ namespace FeatureGame.Domain.Tests
                 .WithBoard(board)
                 .Please();
 
-            mikhail.Play(CoinFlipResult.Head);
+            board.MakeTurnFor(mikhail, CoinFlipResult.Head);
 
             AssertBoard(board, @"
 | Backlog |   Dev    |   Test   | Done |
@@ -82,7 +82,7 @@ namespace FeatureGame.Domain.Tests
                 .WithBoard(board)
                 .Please();
 
-            mikhail.Play(CoinFlipResult.Head);
+            board.MakeTurnFor(mikhail, CoinFlipResult.Head);
 
             AssertBoard(board, @"
 | Backlog |  Dev (1) | Test (1) | Done |
@@ -102,7 +102,7 @@ namespace FeatureGame.Domain.Tests
                 .WithBoard(board)
                 .Please();
 
-            mikhail.Play(CoinFlipResult.Tail);
+            board.MakeTurnFor(mikhail, CoinFlipResult.Tail);
 
             AssertBoard(board, @"
 | Backlog |   Dev    |   Test   | Done |
@@ -122,7 +122,7 @@ namespace FeatureGame.Domain.Tests
                 .WithBoard(board)
                 .Please();
 
-            nikita.Play(CoinFlipResult.Tail);
+            board.MakeTurnFor(nikita, CoinFlipResult.Tail);
 
             AssertBoard(board, @"
 | Backlog |  Dev (1) | Test (1) | Done |
@@ -142,7 +142,7 @@ namespace FeatureGame.Domain.Tests
                 .WithBoard(board)
                 .Please();
 
-            nikita.Play(CoinFlipResult.Tail);
+            board.MakeTurnFor(nikita, CoinFlipResult.Tail);
 
             AssertBoard(board, @"
 | Backlog |  Dev (1) | Test (1) | Done |
@@ -163,7 +163,7 @@ namespace FeatureGame.Domain.Tests
                 .Please();
 
             var coinFlipResult = mikhail.FlipTheCoin(new Coin());
-            mikhail.Play(coinFlipResult);
+            board.MakeTurnFor(mikhail, coinFlipResult);
 
             AssertBoard(board, @"
 | Backlog |   Dev    |   Test   | Done |

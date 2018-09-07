@@ -21,27 +21,6 @@ namespace FeaturebanGame.Domain
             return coin.Flip();
         }
 
-        public void Play(CoinFlipResult coin)
-        {
-            var cards = _board.GetOrderedPlayerCards(this);
-            if (coin == CoinFlipResult.Tail)
-            {
-                if (WorkWithCards(cards)) return;
-                if (PullNewCard()) return;
-
-                var allCards = _board.GetOrderedCards();
-                WorkWithCards(allCards);
-                return;
-            }
-
-            var card = cards.FirstOrDefault(x => x.State == CardState.Available);
-            if (card.Id > 0)
-            {
-                _board.BlockCard(card);
-            }
-            PullNewCard();
-        }
-
         public static bool operator ==(Player player1, Player player2)
         {
             return player1.Name == player2.Name;
@@ -64,30 +43,6 @@ namespace FeaturebanGame.Domain
         public override int GetHashCode()
         {
             return Name.GetHashCode();
-        }
-
-        private bool PullNewCard()
-        {
-            return _board.TryCreateNewCardFor(this);
-        }
-
-        private bool WorkWithCards(List<Card> cards)
-        {
-            var availableCards = cards.Where(x => x.State == CardState.Available);
-            foreach (var card in availableCards)
-            {
-                if (_board.TryMoveCard(card))
-                    return true;
-            }
-
-            var blockedCard = cards.FirstOrDefault(x => x.State == CardState.Blocked);
-            if (blockedCard.Id > 0)
-            {
-                _board.UnblockCard(blockedCard);
-                return true;
-            }
-
-            return false;
         }
     }
 }

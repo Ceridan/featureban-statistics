@@ -23,62 +23,26 @@ namespace FeaturebanGame.Domain
             Done = new DoneColumn();
         }
 
-        public List<Card> GetOrderedPlayerCards(Player player)
+        public void MakeTurnFor(Player player, CoinFlipResult coin)
         {
-            var cards = new List<Card>();
-            cards.AddRange(Test.Cards.Where(x => x.Player == player));
-            cards.AddRange(Dev.Cards.Where(x => x.Player == player));
-            return cards;
-        }
+            var playerCards = GetOrderedPlayerCards(player);
 
-        public List<Card> GetOrderedCards()
-        {
-            var cards = new List<Card>();
-            cards.AddRange(Test.Cards);
-            cards.AddRange(Dev.Cards);
-            return cards;
-        }
-
-        public void BlockCard(Card card)
-        {
-            ChangeCardState(card, CardState.Blocked);
-        }
-
-        public void UnblockCard(Card card)
-        {
-            ChangeCardState(card, CardState.Available);
-        }
-
-        public bool TryCreateNewCardFor(Player player)
-        {
-            var card = BackLog.GenerateNewCardForPlayer(player);
-            return Dev.AddCard(card);
-        }
-
-        public bool TryMoveCard(Card card)
-        {
-            if (card.State == CardState.Blocked)
-                return false;
-
-            if (Test.Cards.Contains(card))
+            if (coin == CoinFlipResult.Tail)
             {
-                Test.RemoveCard(card);
-                Done.CardCount++;
-                return true;
+                if (TryWorkWithCards(playerCards)) return;
+                if (TryCreateNewCardFor(player)) return;
+
+                var allCards = GetOrderedCards();
+                TryWorkWithCards(allCards);
+                return;
             }
 
-            if (Dev.Cards.Contains(card))
+            var card = playerCards.FirstOrDefault(x => x.State == CardState.Available);
+            if (card.Id > 0)
             {
-                if (Test.AddCard(card))
-                {
-                    Dev.RemoveCard(card);
-                    return true;
-                }
-
-                return false;
+                BlockCard(card);
             }
-
-            throw new NullReferenceException("Card must be attached to Dev or Test column");
+            TryCreateNewCardFor(player);
         }
 
         public override string ToString()
@@ -110,6 +74,83 @@ namespace FeaturebanGame.Domain
             }
 
             return sb.ToString();
+        }
+
+        private List<Card> GetOrderedPlayerCards(Player player)
+        {
+            var cards = new List<Card>();
+            cards.AddRange(Test.Cards.Where(x => x.Player == player));
+            cards.AddRange(Dev.Cards.Where(x => x.Player == player));
+            return cards;
+        }
+
+        private List<Card> GetOrderedCards()
+        {
+            var cards = new List<Card>();
+            cards.AddRange(Test.Cards);
+            cards.AddRange(Dev.Cards);
+            return cards;
+        }
+
+        private bool TryWorkWithCards(List<Card> cards)
+        {
+            var availableCards = cards.Where(x => x.State == CardState.Available);
+            foreach (var card in availableCards)
+            {
+                if (TryMoveCard(card))
+                    return true;
+            }
+
+            var blockedCard = cards.FirstOrDefault(x => x.State == CardState.Blocked);
+            if (blockedCard.Id > 0)
+            {
+                UnblockCard(blockedCard);
+                return true;
+            }
+
+            return false;
+        }
+
+        private void BlockCard(Card card)
+        {
+            ChangeCardState(card, CardState.Blocked);
+        }
+
+        private void UnblockCard(Card card)
+        {
+            ChangeCardState(card, CardState.Available);
+        }
+
+        private bool TryCreateNewCardFor(Player player)
+        {
+            var card = BackLog.GenerateNewCardForPlayer(player);
+            return Dev.AddCard(card);
+        }
+
+        private bool TryMoveCard(Card card)
+        {
+            if (card.State == CardState.Blocked)
+                return false;
+
+            if (Test.Cards.Contains(card))
+            {
+                Test.RemoveCard(card);
+                Done.CardCount++;
+                return true;
+            }
+
+            if (Dev.Cards.Contains(card))
+            {
+                if (Test.AddCard(card))
+                {
+                    Dev.RemoveCard(card);
+                    return true;
+                }
+
+                return false;
+            }
+
+            throw new NullReferenceException("Card must be attached to Dev or Test column");
         }
 
         private void ChangeCardState(Card card, CardState newState)

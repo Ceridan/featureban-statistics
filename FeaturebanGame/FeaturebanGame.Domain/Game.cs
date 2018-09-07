@@ -41,7 +41,7 @@ namespace FeaturebanGame.Domain
             foreach (var player in _players)
             {
                 var coinFlipResult = player.FlipTheCoin(_coin);
-                player.Play(coinFlipResult);
+                _board.MakeTurnFor(player, coinFlipResult);
             }
         }
     }
