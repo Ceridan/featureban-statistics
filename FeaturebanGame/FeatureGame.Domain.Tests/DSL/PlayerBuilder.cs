@@ -7,13 +7,6 @@ namespace FeatureGame.Domain.Tests.DSL
     public class PlayerBuilder
     {
         private string _name = "AB";
-        private Board _board;
-
-        public PlayerBuilder WithBoard(Board board)
-        {
-            _board = board;
-            return this;
-        }
 
         public PlayerBuilder WithName(string name)
         {
@@ -23,7 +16,7 @@ namespace FeatureGame.Domain.Tests.DSL
 
         public Player Please()
         {
-            var player = new Player(_name, _board);
+            var player = new Player(_name);
             return player;
         }
     }

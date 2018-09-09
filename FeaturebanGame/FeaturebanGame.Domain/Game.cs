@@ -20,7 +20,7 @@ namespace FeaturebanGame.Domain
 
             foreach (var playerName in playerNames)
             {
-                _players.Add(new Player(playerName, _board));
+                _players.Add(new Player(playerName));
             }
         }
 

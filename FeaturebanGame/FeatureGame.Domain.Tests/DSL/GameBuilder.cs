@@ -38,10 +38,10 @@ namespace FeatureGame.Domain.Tests.DSL
         public Game Please()
         {
             return new Game(
-                playerNames: _playerNames,
-                turnsCount: _turnCount,
-                wipLimit: _limit,
-                coin: _coin ?? new Coin());
+                _playerNames,
+                _turnCount,
+                _limit,
+                _coin ?? new Coin());
         }
     }
 }

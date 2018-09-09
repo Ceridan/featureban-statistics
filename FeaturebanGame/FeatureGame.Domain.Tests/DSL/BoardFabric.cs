@@ -33,16 +33,16 @@ namespace FeatureGame.Domain.Tests.DSL
                 var devCard = ParseCard(columns[1]);
                 if (!string.IsNullOrEmpty(devCard.playerName))
                 {
-                    var player = new Player(devCard.playerName, board);
-                    board.Dev.AddCard(CardFabric.CreateCard(player, devCard.cardState));
+                    var player = new Player(devCard.playerName);
+                    board.Dev.AddCard(new Card(player, devCard.cardState));
                     players.Add(player);
                 }
 
                 var testCard = ParseCard(columns[2]);
                 if (!string.IsNullOrEmpty(testCard.playerName))
                 {
-                    var player = new Player(testCard.playerName, board);
-                    board.Test.AddCard(CardFabric.CreateCard(player, devCard.cardState));
+                    var player = new Player(testCard.playerName);
+                    board.Test.AddCard(new Card(player, devCard.cardState));
                     players.Add(player);
                 }
             }
