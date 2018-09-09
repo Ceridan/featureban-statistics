@@ -4,22 +4,19 @@ namespace FeaturebanGame.Domain
 {
     public class WipColumn
     {
+        private readonly int _limit;
         private readonly List<Card> _cards = new List<Card>();
 
-        public WipColumn(string name, int limit)
+        public WipColumn(int limit)
         {
-            Name = name;
-            Limit = limit;
+            _limit = limit;
         }
-
-        public string Name { get; }
-        public int Limit { get; }
 
         public IReadOnlyList<Card> Cards => _cards.AsReadOnly();
 
         public bool AddCard(Card card)
         {
-            if (_cards.Count < Limit || Limit == 0)
+            if (_cards.Count < _limit || _limit == 0)
             {
                 _cards.Add(card);
                 return true;

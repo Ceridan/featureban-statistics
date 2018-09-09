@@ -28,10 +28,10 @@ namespace FeaturebanGame.Runner
                         for (var i = 0; i < _gamesCount; i++)
                         {
                             var game = new Game(
-                                playerNames: playerNames.Take(players),
-                                turnsCount: turns,
-                                wipLimit: wipLimit,
-                                coin: new Coin()
+                                playerNames.Take(players),
+                                turns,
+                                wipLimit,
+                                new Coin()
                             );
                             cardsDone += game.Play();
                         }

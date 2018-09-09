@@ -4,7 +4,7 @@ namespace FeaturebanGame.Domain
     {
         public Card GenerateNewCardForPlayer(Player player)
         {
-            return CardFabric.CreateCard(player, CardState.Available);
+            return new Card(player, CardState.Available);
         }
     }
 }

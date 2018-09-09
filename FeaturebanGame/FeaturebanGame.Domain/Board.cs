@@ -18,8 +18,8 @@ namespace FeaturebanGame.Domain
         {
             _limit = limit;
             BackLog  = new BacklogColumn();
-            Dev = new WipColumn(name: "Dev", limit: limit);
-            Test = new WipColumn(name: "Test", limit: limit);
+            Dev = new WipColumn(limit);
+            Test = new WipColumn(limit);
             Done = new DoneColumn();
         }
 
@@ -38,7 +38,7 @@ namespace FeaturebanGame.Domain
             }
 
             var card = playerCards.FirstOrDefault(x => x.State == CardState.Available);
-            if (card.Id > 0)
+            if (card != null)
             {
                 BlockCard(card);
             }
@@ -102,7 +102,7 @@ namespace FeaturebanGame.Domain
             }
 
             var blockedCard = cards.FirstOrDefault(x => x.State == CardState.Blocked);
-            if (blockedCard.Id > 0)
+            if (blockedCard != null)
             {
                 UnblockCard(blockedCard);
                 return true;
@@ -163,7 +163,7 @@ namespace FeaturebanGame.Domain
             if (wip == null)
                 throw new NullReferenceException("Card must be attached to Dev or Test column");
 
-            var newCard = CardFabric.CreateCard(card.Player, newState);
+            var newCard = new Card(card.Player, newState);
             wip.ReplaceCard(card, newCard);
         }
 

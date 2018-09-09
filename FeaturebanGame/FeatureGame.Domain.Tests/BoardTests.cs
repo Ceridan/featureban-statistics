@@ -18,7 +18,6 @@ namespace FeatureGame.Domain.Tests
 ");
             var mikhail = Create.Player
                 .WithName("MK")
-                .WithBoard(board)
                 .Please();
 
             board.MakeTurnFor(mikhail, CoinFlipResult.Tail);
@@ -38,7 +37,6 @@ namespace FeatureGame.Domain.Tests
 ");
             var mikhail = Create.Player
                 .WithName("MK")
-                .WithBoard(board)
                 .Please();
 
             board.MakeTurnFor(mikhail, CoinFlipResult.Tail);
@@ -58,7 +56,6 @@ namespace FeatureGame.Domain.Tests
 ");
             var mikhail = Create.Player
                 .WithName("MK")
-                .WithBoard(board)
                 .Please();
 
             board.MakeTurnFor(mikhail, CoinFlipResult.Head);
@@ -79,7 +76,6 @@ namespace FeatureGame.Domain.Tests
 ");
             var mikhail = Create.Player
                 .WithName("MK")
-                .WithBoard(board)
                 .Please();
 
             board.MakeTurnFor(mikhail, CoinFlipResult.Head);
@@ -99,7 +95,6 @@ namespace FeatureGame.Domain.Tests
 ");
             var mikhail = Create.Player
                 .WithName("MK")
-                .WithBoard(board)
                 .Please();
 
             board.MakeTurnFor(mikhail, CoinFlipResult.Tail);
@@ -119,7 +114,6 @@ namespace FeatureGame.Domain.Tests
 ");
             var nikita = Create.Player
                 .WithName("NS")
-                .WithBoard(board)
                 .Please();
 
             board.MakeTurnFor(nikita, CoinFlipResult.Tail);
@@ -139,7 +133,6 @@ namespace FeatureGame.Domain.Tests
 ");
             var nikita = Create.Player
                 .WithName("NS")
-                .WithBoard(board)
                 .Please();
 
             board.MakeTurnFor(nikita, CoinFlipResult.Tail);
@@ -159,7 +152,6 @@ namespace FeatureGame.Domain.Tests
 ");
             var mikhail = Create.Player
                 .WithName("MK")
-                .WithBoard(board)
                 .Please();
 
             var coinFlipResult = mikhail.FlipTheCoin(new Coin());

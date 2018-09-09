@@ -1,19 +1,12 @@
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.VisualBasic.CompilerServices;
-
 namespace FeaturebanGame.Domain
 {
     public struct Player
     {
-        private readonly Board _board;
+        public string Name { get; }
 
-        public string Name { get;  }
-
-        public Player(string name, Board board)
+        public Player(string name)
         {
             Name = name ?? string.Empty;
-            _board = board;
         }
 
         public CoinFlipResult FlipTheCoin(ICoin coin)

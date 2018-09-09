@@ -1,40 +1,35 @@
 namespace FeaturebanGame.Domain
 {
-    public struct Card
+    public class Card
     {
-        public int Id { get; }
         public CardState State { get; }
         public Player Player { get; }
 
-        public Card(int id, Player player, CardState state = CardState.Available)
+        public Card(Player player, CardState state = CardState.Available)
         {
-            Id = id;
             Player = player;
             State = state;
         }
 
-        public static bool operator ==(Card card1, Card card2)
+        private bool Equals(Card other)
         {
-            return card1.Id == card2.Id;
-        }
-
-        public static bool operator !=(Card card1, Card card2)
-        {
-            return !(card1 == card2);
+            return State == other.State && Player.Equals(other.Player);
         }
 
         public override bool Equals(object obj)
         {
-            if (!(obj is Card))
-                return false;
-
-            var card = (Card) obj;
-            return Id == card.Id;
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != GetType()) return false;
+            return Equals((Card) obj);
         }
 
         public override int GetHashCode()
         {
-            return Id.GetHashCode();
+            unchecked
+            {
+                return ((int) State * 397) ^ Player.GetHashCode();
+            }
         }
 
         public override string ToString()
